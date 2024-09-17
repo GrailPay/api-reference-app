@@ -7,7 +7,6 @@ class Config:
     ENVIRONMENT: str = "sandbox"
     PROCESSOR_API_KEY: str = ""
     VENDOR_API_KEY: str = ""
-    TEST_MID: str = ""
     WEBHOOK_URL: str = ""
     KYB: bool = False
     ROUTING_NUMBER: str = ""
@@ -30,7 +29,6 @@ class Config:
             self.ENVIRONMENT = config["environment"]
             self.PROCESSOR_API_KEY = config["authentication"]["processor_api_key"]
             self.VENDOR_API_KEY = config["authentication"]["vendor_api_key"]
-            self.TEST_MID = config["test_mid"]
             self.WEBHOOK_URL = config["webhook"]["url"]
             self.KYB = config["onboarding"]["kyb"]
             self.ROUTING_NUMBER = config["routing_number"]
