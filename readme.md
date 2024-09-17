@@ -48,7 +48,7 @@ You will not be able to perform transactions unless either the payer or payee ha
 
 The account number is randomly generated.
 
-# Usage
+# Commands
 
     python grailpay.py <action> [params]
     
@@ -58,17 +58,29 @@ The account number is randomly generated.
 
     python grailpay.py webhook:register
 
+Register the webhook url specified in the config file to receive webhook event notifications.
+Currently subscribes to all events.
+
 ### webhook:deregister
 
     python grailpay.py webhook:deregister
+
+Deregister the webhook url specified in the config file to stop receiving webhook event notifications.
 
 ### webhook:fetch
     
     python grailpay.py webhook:fetch
 
+Fetch all webhooks subscribed to each event.
+
 ### business:create
     
     python grailpay.py business:create
+
+Create a business with a random account number and the routing number specified in the config file.
+TIN and email are randomly generated.
+
+The uuid of this entity is used in the transaction:create command. You will need to create two businesses to perform a transaction.
 
 ### transaction:create
     python grailpay.py transaction:create {payer_business_uuid} {payee_business_uuid} {amount}
@@ -76,6 +88,8 @@ The account number is randomly generated.
 * payer_business_uuid: The uuid of the source business.
 * payee_business_uuid: The uuid of the destination business.
 * amount: The amount of the transaction in cents.
+
+Using the uuids of the businesses created in the business:create command, create a transaction between the two businesses.
 
 ### transaction:create_mid
     
@@ -85,6 +99,7 @@ The account number is randomly generated.
 * payee_business_mid: The mid of the destination business.
 * amount: The amount of the transaction in cents.
 
+Using the uuid of the source business and the mid of the destination business, create a transaction between the two businesses.
 
 ### transaction:cancel
         
@@ -92,11 +107,35 @@ The account number is randomly generated.
 
 * transaction_uuid: The uuid of the transaction to cancel.
 
+Cancel a transaction using the uuid of the transaction.
+
 ### transaction:fetch
             
     python grailpay.py transaction:fetch {transaction_uuid}
 
 * transaction_uuid: The uuid of the transaction to fetch.
 
+Fetch the details of a transaction using the uuid of the transaction.
 
+# Usage
 
+1. Register a webhook.
+
+    ```
+    python grailpay.py webhook:register
+    ```
+   
+2. Create two businesses.
+
+    ```
+    python grailpay.py business:create
+    python grailpay.py business:create
+    ```
+   After executing the above commands, you will see the uuids of the businesses created. Use these uuids in the next step.
+
+3. Create a transaction between the two businesses.
+
+    ```
+    python grailpay.py transaction:create {payer_business_uuid} {payee_business_uuid} {amount}
+    ```
+   Replace {payer_business_uuid} and {payee_business_uuid} with the uuids of the businesses created in the previous step. Replace {amount} with the amount of the transaction in cents.
