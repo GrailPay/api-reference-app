@@ -10,15 +10,33 @@ class BusinessFactory:
 
     @staticmethod
     def generate_random_email() -> str:
+        """
+        This method generates a random email username @test.com with 10 characters
+
+        :return: str
+        """
+
         random_user: str = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
         email: str = f"{random_user}@test.com"
         return email
 
     @staticmethod
     def generate_random_tin() -> str:
+        """
+        This method generates a random 9 digit Tax Identification Number
+
+        :return: str
+        """
+
         return ''.join(random.choices('0123456789', k=9))
 
     def build( self ) -> Business:
+        """
+        This method builds a Business object with random data
+
+        :return: Business
+        """
+
         random_account_routing: AccountRouting = AccountRoutingFactory(self.config).build()
         random_tin: str = self.generate_random_tin()
         random_email: str = self.generate_random_email()

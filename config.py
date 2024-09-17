@@ -17,6 +17,11 @@ class Config:
         self.load()
 
     def load(self) -> None:
+        """
+        This method loads the configuration file
+
+        :return:
+        """
 
         try:
             with open(self.CONFIG_FILE, "r") as f:

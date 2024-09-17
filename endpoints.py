@@ -16,6 +16,13 @@ class Endpoints:
             self.base_url = "https://api.grailpay.com/3p"
 
     def get_url(self, endpoint: str) -> str:
+        """
+        This method returns the full URL for an endpoint
+
+        :param endpoint: The endpoint to get the full URL for.
+        :return: str
+        """
+
         return self.base_url + endpoint
 
 
