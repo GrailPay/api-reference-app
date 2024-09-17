@@ -138,9 +138,25 @@ Fetch the details of a transaction using the uuid of the transaction.
     ```
    After executing the above commands, you will see the uuids of the businesses created. Use these uuids in the next step.
 
+
 3. Create a transaction between the two businesses.
 
     ```
     python grailpay.py transaction:create {payer_business_uuid} {payee_business_uuid} {amount}
     ```
    Replace {payer_business_uuid} and {payee_business_uuid} with the uuids of the businesses created in the previous step. Replace {amount} with the amount of the transaction in cents.
+
+
+4. Fetch the details of the transaction.
+
+    ```
+    python grailpay.py transaction:fetch {transaction_uuid}
+    ```
+   Replace {transaction_uuid} with the uuid of the transaction created in the previous step to see the details of the transaction.
+
+
+5. Observers the webhook notifications.
+
+    Check the log of your webhook url to see the transaction event notifications.
+
+    You can read about the events here: [GrailPay Webhooks](https://docs.grailpay.com/docs/webhooks)
