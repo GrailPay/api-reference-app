@@ -1,6 +1,6 @@
 # GrailPay API Reference Application
 
-Company Website:(https://grailpay.com)
+Company Website: (https://grailpay.com)
 
 API Documentation Website: (https://docs.grailpay.com)
 
@@ -102,7 +102,7 @@ Using the uuids of the businesses created in the business:create command, create
 
 ### transaction:create_mid
     
-    python grailpay.py transaction:create_mid payer_business_uuid payee_business_mid amount
+    python grailpay.py transaction:create_mid {payer_business_uuid} {payee_business_mid} {amount}
 
 * payer_business_uuid: The uuid of the source business.
 * payee_business_mid: The mid of the destination business.
