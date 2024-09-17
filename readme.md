@@ -37,6 +37,8 @@ The configuration is stored in config.yaml.
 
 This must be a functional URL that can receive POST requests in order for register to work correctly as it is called during the register process.
 
+For test purposes, sites like [webhook.site](https://webhook.site) can be used to receive webhook notifications.
+
 ## onboarding
 
 * kyb: bool
