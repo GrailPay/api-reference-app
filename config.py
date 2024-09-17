@@ -4,19 +4,19 @@ from datetime import datetime, time as dttime
 
 
 class Config:
-    ENVIRONMENT = "sandbox"
-    PROCESSOR_API_KEY = ""
-    VENDOR_API_KEY = ""
-    TEST_MID = ""
-    WEBHOOK_URL = ""
-    KYB = False
-    ROUTING_NUMBER = ""
+    ENVIRONMENT: str = "sandbox"
+    PROCESSOR_API_KEY: str = ""
+    VENDOR_API_KEY: str = ""
+    TEST_MID: str = ""
+    WEBHOOK_URL: str = ""
+    KYB: bool = False
+    ROUTING_NUMBER: str = ""
 
-    def __init__(self, file):
+    def __init__(self, file: str) -> None:
         self.CONFIG_FILE = file
         self.load()
 
-    def load(self):
+    def load(self) -> None:
 
         try:
             with open(self.CONFIG_FILE, "r") as f:
@@ -34,4 +34,3 @@ class Config:
 
         except Exception as e:
             print( "Error loading config file. Key: " + str(e) )
-            print("Failed to load config, using defaults")

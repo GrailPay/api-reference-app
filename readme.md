@@ -14,6 +14,9 @@ This program is a reference implementation of the GrailPay API. It demonstrates 
 
 
 # Installation
+
+This project was developed using Python 3.12.6
+
 ## Install Python Packages
     pip install -r requirements.txt
 

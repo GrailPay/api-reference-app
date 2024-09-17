@@ -1,16 +1,16 @@
 import sys
 from application import Application
 
-if __name__ == '__main__':
+def main() -> None:
     app = Application()
 
-    actions = {
+    actions: dict = {
         "webhook:register": (app.register_webhook, 0, ""),
         "webhook:deregister": (app.deregister_webhook, 0, ""),
         "webhook:fetch": (app.fetch_webhook, 0, ""),
         "business:create": (app.business_create, 0, ""),
-        "transaction:create": (app.transaction_create, 3, "{payor_uuid} {payee_uuid} {amount_in_cents}"),
-        "transaction:create_mid": (app.transaction_create_mid, 3, "{payor_uuid} {payee_mid} {amount_in_cents}"),
+        "transaction:create": (app.transaction_create, 3, "{payer_uuid} {payee_uuid} {amount_in_cents}"),
+        "transaction:create_mid": (app.transaction_create_mid, 3, "{payer_uuid} {payee_mid} {amount_in_cents}"),
         "transaction:cancel": (app.transaction_cancel, 1, "{transaction_uuid}"),
         "transaction:fetch": (app.transaction_fetch, 1, "{transaction_uuid}"),
     }
@@ -38,3 +38,5 @@ if __name__ == '__main__':
         print(f"Unknown action: {action}")
         sys.exit(1)
 
+if __name__ == '__main__':
+    main()

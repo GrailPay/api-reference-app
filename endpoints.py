@@ -1,20 +1,21 @@
+from config import Config
 
 class Endpoints:
-    WEBHOOK_REGISTER = "/api/v1/webhook"
-    WEBHOOK_DEREGISTER = "/api/v1/webhook"
-    WEBHOOK_FETCH = "/api/v1/webhook"
-    BUSINESS_CREATE = "/api/v2/businesses"
-    TRANSACTION_CREATE = "/api/v1/transaction"
-    TRANSACTION_FETCH = "/api/v1/transaction/{transaction_uuid}"
-    TRANSACTION_CANCEL = "/api/v1/transaction/{transaction_uuid}"
+    WEBHOOK_REGISTER: str = "/api/v1/webhook"
+    WEBHOOK_DEREGISTER: str = "/api/v1/webhook"
+    WEBHOOK_FETCH: str = "/api/v1/webhook"
+    BUSINESS_CREATE: str = "/api/v2/businesses"
+    TRANSACTION_CREATE: str = "/api/v1/transaction"
+    TRANSACTION_FETCH: str = "/api/v1/transaction/{transaction_uuid}"
+    TRANSACTION_CANCEL: str = "/api/v1/transaction/{transaction_uuid}"
 
-    def __init__(self, config):
-        self.base_url = "https://api-sandbox.grailpay.com/3p"
+    def __init__(self, config: Config) -> None:
+        self.base_url: str = "https://api-sandbox.grailpay.com/3p"
 
         if config.ENVIRONMENT == "production":
             self.base_url = "https://api.grailpay.com/3p"
 
-    def get_url(self, endpoint):
+    def get_url(self, endpoint: str) -> str:
         return self.base_url + endpoint
 
 
