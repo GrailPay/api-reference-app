@@ -65,6 +65,8 @@ The account number is randomly generated.
 
 ### webhook:register
 
+(https://docs.grailpay.com/docs/register-a-webhook)
+
     python grailpay.py webhook:register
 
 Register the webhook url specified in the config file to receive webhook event notifications.
@@ -72,18 +74,26 @@ Currently subscribes to all events.
 
 ### webhook:deregister
 
+(https://docs.grailpay.com/docs/deregister-webhook)
+
     python grailpay.py webhook:deregister
 
 Deregister the webhook url specified in the config file to stop receiving webhook event notifications.
 
 ### webhook:fetch
-    
+
+(https://docs.grailpay.com/docs/fetch-webhooks)
+
     python grailpay.py webhook:fetch
 
 Fetch all webhooks subscribed to each event.
 
 ### business:create
-    
+
+(https://docs.grailpay.com/v2.0/docs/onboarding-a-business)
+
+** Note: this uses the 2.0 version of the API as the 1.0 version is being deprecated.
+
     python grailpay.py business:create
 
 Create a business with a random account number and the routing number specified in the config file.
@@ -92,6 +102,9 @@ TIN and email are randomly generated.
 The uuid of this entity is used in the transaction:create command. You will need to create two businesses to perform a transaction.
 
 ### transaction:create
+
+(https://docs.grailpay.com/docs/creating-a-transaction)
+
     python grailpay.py transaction:create {payer_business_uuid} {payee_business_uuid} {amount}
 
 * payer_business_uuid: The uuid of the source business.
@@ -101,6 +114,8 @@ The uuid of this entity is used in the transaction:create command. You will need
 Using the uuids of the businesses created in the business:create command, create a transaction between the two businesses.
 
 ### transaction:create_mid
+
+(https://docs.grailpay.com/docs/creating-a-transaction)
     
     python grailpay.py transaction:create_mid {payer_business_uuid} {payee_business_mid} {amount}
 
@@ -111,7 +126,9 @@ Using the uuids of the businesses created in the business:create command, create
 Using the uuid of the source business and the mid of the destination business, create a transaction between the two businesses.
 
 ### transaction:cancel
-        
+
+(https://docs.grailpay.com/docs/cancel-transaction)
+
     python grailpay.py transaction:cancel {transaction_uuid}
 
 * transaction_uuid: The uuid of the transaction to cancel.
@@ -119,7 +136,9 @@ Using the uuid of the source business and the mid of the destination business, c
 Cancel a transaction using the uuid of the transaction.
 
 ### transaction:fetch
-            
+
+(https://docs.grailpay.com/docs/fetch-transaction)
+
     python grailpay.py transaction:fetch {transaction_uuid}
 
 * transaction_uuid: The uuid of the transaction to fetch.
