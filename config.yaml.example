@@ -10,6 +10,4 @@ webhook:
 onboarding:
     kyb: True
 
-test_mid: "your_test_mid"
-
 routing_number: "011401533"
