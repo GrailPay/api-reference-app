@@ -2,7 +2,7 @@ import requests
 import json
 
 from business_factory import BusinessFactory
-from dto import Webhook, Business, Transaction, TransactionMid
+from dto import Webhook, Business, Transaction, TransactionMid, TransactionList
 from config import Config
 from endpoints import Endpoints
 
@@ -47,7 +47,7 @@ class Application:
             print(f"Data: {data}")
 
         if method == "GET":
-            response: requests.Response = requests.get(url, headers=headers, json=data)
+            response: requests.Response = requests.get(url, headers=headers, data=data)
         elif method == "POST":
             response: requests.Response= requests.post(url, headers=headers, json=data)
         elif method == "PUT":
@@ -199,6 +199,21 @@ class Application:
         url = url.replace("{transaction_uuid}", transaction_uuid)
 
         self.call_api( url, "GET")
+
+    def transaction_list(self) -> None:
+        """
+        This method fetches a list of transactions with the GrailPay API
+
+        :return:
+        """
+
+        url: str = self.endpoints.get_url(Endpoints.TRANSACTION_LIST)
+
+        transaction_list: TransactionList = TransactionList(
+            pageSize=200
+        )
+
+        self.call_api( url, "GET", transaction_list.__dict__)
 
     def transaction_cancel(self, transaction_uuid: str ) -> None:
         """

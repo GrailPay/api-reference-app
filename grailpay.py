@@ -13,6 +13,7 @@ def main() -> None:
         "transaction:create_mid": (app.transaction_create_mid, 3, "{payer_uuid} {payee_mid} {amount_in_cents}"),
         "transaction:cancel": (app.transaction_cancel, 1, "{transaction_uuid}"),
         "transaction:fetch": (app.transaction_fetch, 1, "{transaction_uuid}"),
+        "transaction:list": (app.transaction_list, 0, ""),
     }
 
     if len( sys.argv ) < 2:
