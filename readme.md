@@ -14,7 +14,8 @@ This program is a reference implementation of the GrailPay API. It demonstrates 
 * Onboard a business.
 * Create an ACH payment.
 * Cancel an ACH payment.
-* Fetch the details of an ACH payment.
+* Fetch the details of a single ACH payment.
+* Fetch a list of ACH payments.
 
 
 # Installation
@@ -86,7 +87,7 @@ Deregister the webhook url specified in the config file to stop receiving webhoo
 
     python grailpay.py webhook:fetch
 
-Fetch all webhooks subscribed to each event.
+Fetch a list of all webhooks and subscribed events.
 
 ### business:create
 
