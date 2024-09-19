@@ -7,6 +7,7 @@ class Endpoints:
     BUSINESS_CREATE: str = "/api/v2/businesses"
     TRANSACTION_CREATE: str = "/api/v1/transaction"
     TRANSACTION_FETCH: str = "/api/v1/transaction/{transaction_uuid}"
+    TRANSACTION_LIST: str = "/api/v2/transactions"
     TRANSACTION_CANCEL: str = "/api/v1/transaction/{transaction_uuid}"
 
     def __init__(self, config: Config) -> None:
