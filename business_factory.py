@@ -16,7 +16,7 @@ class BusinessFactory:
         :return: str
         """
 
-        random_user: str = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
+        random_user: str = ''.join( random.choices( string.ascii_lowercase + string.digits, k=10 ) )
         email: str = f"{random_user}@test.com"
         return email
 
@@ -28,7 +28,7 @@ class BusinessFactory:
         :return: str
         """
 
-        return ''.join(random.choices('0123456789', k=9))
+        return ''.join( random.choices('0123456789', k=9 ) )
 
     def build( self ) -> Business:
         """
@@ -37,7 +37,7 @@ class BusinessFactory:
         :return: Business
         """
 
-        random_account_routing: AccountRouting = AccountRoutingFactory(self.config).build()
+        random_account_routing: AccountRouting = AccountRoutingFactory( self.config ).build()
         random_tin: str = self.generate_random_tin()
         random_email: str = self.generate_random_email()
 

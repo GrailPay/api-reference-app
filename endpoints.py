@@ -10,13 +10,13 @@ class Endpoints:
     TRANSACTION_LIST: str = "/api/v2/transactions"
     TRANSACTION_CANCEL: str = "/api/v1/transaction/{transaction_uuid}"
 
-    def __init__(self, config: Config) -> None:
+    def __init__( self, config: Config ) -> None:
         self.base_url: str = "https://api-sandbox.grailpay.com/3p"
 
         if config.ENVIRONMENT == "production":
             self.base_url = "https://api.grailpay.com/3p"
 
-    def get_url(self, endpoint: str) -> str:
+    def get_url( self, endpoint: str ) -> str:
         """
         This method returns the full URL for an endpoint
 
