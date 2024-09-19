@@ -1,3 +1,5 @@
+## 0.5.4
+
 ## 0.5.3 2024-09-19
 * Added transaction:list
 
