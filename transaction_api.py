@@ -1,3 +1,4 @@
+import logging
 from api_base import ApiBase
 from config import Config
 from endpoints import Endpoints
@@ -5,12 +6,9 @@ from api_caller import ApiCaller
 from dto import Transaction, TransactionMid, TransactionList
 
 class TransactionApi( ApiBase ):
-    def __init__(self, config: Config):
-        super().__init__(config)
 
-        self.config = config
-        self.endpoints: Endpoints = Endpoints(self.config)
-        self.api_caller: ApiCaller = ApiCaller(self.config)
+    def __init__( self, config: Config, logger: logging.Logger ):
+        super().__init__( config, logger )
 
     def create( self, payer_uuid: str, payee_uuid: str, amount: int ) -> None:
         """
@@ -28,10 +26,14 @@ class TransactionApi( ApiBase ):
             amount = amount
         )
 
-        self.api_caller.post(
+        response = self.api_caller.post(
             self.endpoints.get_url( Endpoints.TRANSACTION_CREATE ),
             transaction.__dict__
         )
+
+        if response.status_code == 201:
+            response_data = response.json()
+            self.logger.info( f"Created transaction: {response_data['data']['uuid']}")
 
     def create_mid( self, payer_uuid: str, payee_mid: str, amount: int ) -> None:
         """
@@ -49,10 +51,14 @@ class TransactionApi( ApiBase ):
             amount = amount
         )
 
-        self.api_caller.post(
+        response = self.api_caller.post(
             self.endpoints.get_url( Endpoints.TRANSACTION_CREATE ),
             transaction.__dict__
         )
+
+        if response.status_code == 201:
+            response_data = response.json()
+            self.logger.info( f"Created transaction: {response_data['data']['uuid']}")
 
     def fetch( self, transaction_uuid: str ) -> None:
         """

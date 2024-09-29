@@ -1,11 +1,14 @@
+import logging
+
 from api_base import ApiBase
 from config import Config
 from endpoints import Endpoints
 from dto import Webhook
 
 class WebhookApi( ApiBase ):
-    def __init__( self, config: Config ):
-        super().__init__( config )
+
+    def __init__( self, config: Config, logger: logging.Logger ):
+        super().__init__( config, logger )
 
         self.webhook_events: list = [
             "TransactionStarted",

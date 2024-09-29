@@ -5,6 +5,7 @@ from dto import AccountRouting, Business
 from account_routing_factory import AccountRoutingFactory
 
 class BusinessBuilder:
+
     def __init__( self, config: Config ) -> None:
         self.config: Config = config
         self.email: str = ""
@@ -19,7 +20,7 @@ class BusinessBuilder:
         :return: str
         """
 
-        random_user: str = ''.join( random.choices( string.ascii_lowercase + string.digits, k=10 ) )
+        random_user: str = ''.join( random.choices( string.ascii_lowercase + string.digits, k = 10 ) )
         email: str = f"{random_user}@test.com"
         return email
 

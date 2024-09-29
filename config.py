@@ -10,6 +10,7 @@ class Config:
     WEBHOOK_URL: str = ""
     KYB: bool = False
     ROUTING_NUMBER: str = ""
+    LOG_LEVEL: str = "INFO"
 
     def __init__( self, file: str ) -> None:
         self.CONFIG_FILE = file
@@ -32,8 +33,7 @@ class Config:
             self.WEBHOOK_URL = config[ "webhook" ][ "url" ]
             self.KYB = config[ "onboarding" ][ "kyb" ]
             self.ROUTING_NUMBER = config[ "routing_number" ]
-
-            print( "Loaded config file." )
+            self.LOG_LEVEL = config[ "log_level" ]
 
         except Exception as e:
             print( "Error loading config file. Key: " + str( e ) )

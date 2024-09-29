@@ -1,20 +1,30 @@
 import sys
-from idlelib.pyparse import trans
-
+import logging
 from config import Config
 from webhook_api import WebhookApi
 from business_api import BusinessApi
 from transaction_api import TransactionApi
 
+def get_log_level( level: str) -> int:
+    level_map: dict = {
+        'DEBUG': logging.DEBUG,
+        'INFO': logging.INFO,
+        'WARNING': logging.WARNING,
+        'ERROR': logging.ERROR
+    }
+
+    return level_map[ level.upper() ]
 
 def main() -> None:
     CONFIG_FILE: str = "config.yaml"
 
     config: Config = Config( CONFIG_FILE )
+    logging.basicConfig( level = get_log_level( config.LOG_LEVEL ) )
+    logger = logging.getLogger( "GrailPay" )
 
-    webhook_api = WebhookApi( config )
-    business_api = BusinessApi( config )
-    transaction_api = TransactionApi( config )
+    webhook_api = WebhookApi( config, logger )
+    business_api = BusinessApi( config, logger )
+    transaction_api = TransactionApi( config, logger )
 
     actions: dict = {
         "webhook:register": ( webhook_api.register, 0, "" ),

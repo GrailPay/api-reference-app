@@ -1,11 +1,14 @@
+import logging
 from config import Config
 import requests
 import json
+import logging
 
 class ApiCaller:
 
-    def __init__( self, config: Config ) -> None:
+    def __init__( self, config: Config, logger: logging.Logger ) -> None:
         self.config = config
+        self.logger = logger
 
     def get_headers( self ) -> dict:
         """
@@ -22,23 +25,22 @@ class ApiCaller:
 
         return headers
 
-    @staticmethod
-    def pre_logging( method: str, url, data: dict = None ) -> None:
-        print(f"Calling {method} {url}")
+    def pre_logging( self, method: str, url, data: dict = None ) -> None:
+        self.logger.info( f"Calling {method} {url}" )
         if data:
-            print(f"Data: {data}")
+            self.logger.debug( f"Data: {data}" )
 
-    @staticmethod
-    def post_logging(response):
-        print(f"Status Code: {response.status_code}")
+    def post_logging( self, response ):
+        self.logger.info( f"Status Code: {response.status_code}" )
+
         try:
-            formatted_response: str = json.dumps(response.json(), indent=4)
+            formatted_response: str = json.dumps( response.json(), indent = 4 )
         except ValueError:
             formatted_response: str = response.text
-        print(f"Response Body: {formatted_response}")
 
+        self.logger.debug( f"Response Body: {formatted_response}" )
 
-    def get(self, url: str, data: dict = None ) -> requests.Response | None:
+    def get( self, url: str, data: dict = None ) -> requests.Response | None:
         """
         Makes an api call using a get request.
         :param url:
@@ -54,7 +56,7 @@ class ApiCaller:
 
         return response
 
-    def post(self, url: str, data: dict = None ) -> requests.Response | None:
+    def post( self, url: str, data: dict = None ) -> requests.Response | None:
         """
         Makes an api call using a post request.
         :param url:
@@ -64,13 +66,13 @@ class ApiCaller:
 
         self.pre_logging( "post", url, data)
 
-        response: requests.Response = requests.post(url, headers=self.get_headers(), json=data)
+        response: requests.Response = requests.post( url, headers = self.get_headers(), json = data )
 
         self.post_logging(response)
 
         return response
 
-    def put(self, url: str, data: dict = None ) -> requests.Response | None:
+    def put( self, url: str, data: dict = None ) -> requests.Response | None:
         """
         Makes an api call using a put request.
         :param url:
@@ -78,15 +80,15 @@ class ApiCaller:
         :return:
         """
 
-        self.pre_logging( "put", url, data)
+        self.pre_logging( "put", url, data )
 
-        response: requests.Response = requests.put(url, headers=self.get_headers(), json=data)
+        response: requests.Response = requests.put( url, headers = self.get_headers(), json = data )
 
         self.post_logging(response)
 
         return response
 
-    def delete(self, url: str, data: dict = None ) -> requests.Response | None:
+    def delete( self, url: str, data: dict = None ) -> requests.Response | None:
         """
         Makes an api call using a delete request.
         :param url:
@@ -96,7 +98,7 @@ class ApiCaller:
 
         self.pre_logging( "delete", url, data)
 
-        response: requests.Response = requests.delete(url, headers=self.get_headers(), json=data)
+        response: requests.Response = requests.delete( url, headers = self.get_headers(), json = data )
 
         self.post_logging(response)
 

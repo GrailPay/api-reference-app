@@ -1,3 +1,5 @@
+import logging
+
 from api_base import ApiBase
 from config import Config
 from endpoints import Endpoints
@@ -5,8 +7,9 @@ from dto import Business
 from business_builder import BusinessBuilder
 
 class BusinessApi( ApiBase ):
-    def __init__(self, config: Config):
-        super().__init__(config)
+
+    def __init__( self, config: Config, logger: logging.Logger ):
+        super().__init__( config, logger )
 
     def create( self ) -> None:
         """
@@ -15,13 +18,17 @@ class BusinessApi( ApiBase ):
         :return:
         """
 
-        business: Business = (BusinessBuilder( self.config )
+        business: Business = ( BusinessBuilder( self.config )
                               .random_email()
                               .random_tin()
                               .random_account_routing()
                               .build())
 
-        self.api_caller.post(
+        response = self.api_caller.post(
             self.endpoints.get_url( Endpoints.BUSINESS_CREATE ),
             business.__dict__
         )
+
+        if response.status_code == 201:
+            response_data = response.json()
+            self.logger.info( f"Created business: {response_data['data']['uuid']}")
