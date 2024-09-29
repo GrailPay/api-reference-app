@@ -38,18 +38,6 @@ class Application:
                 "RefundPayoutFailed",
             ]
 
-    def call_api( self, url: str, method: str, data: dict = None) -> requests.Response | None:
-        """
-        This method makes a call to the GrailPay API
-
-        :param url: The API endpoint to call.
-        :param method: The HTTP method to use.
-        :param data: Optional data to send with the request.
-        :return:
-        """
-
-        return self.api_caller.call(url, method, data)
-
     def register_webhook( self ) -> None:
         """
         This method registers a webhook with the GrailPay API
@@ -64,9 +52,8 @@ class Application:
             event_names = self.webhook_events
         )
 
-        self.call_api(
+        self.api_caller.post(
             self.endpoints.get_url( Endpoints.WEBHOOK_REGISTER ),
-            ApiCaller.METHOD_POST,
             webhook.__dict__
         )
 
@@ -84,9 +71,8 @@ class Application:
             event_names = self.webhook_events
         )
 
-        self.call_api(
+        self.api_caller.delete(
             self.endpoints.get_url( Endpoints.WEBHOOK_DEREGISTER ),
-            ApiCaller.METHOD_DELETE,
             webhook.__dict__
         )
 
@@ -97,9 +83,8 @@ class Application:
         :return:
         """
 
-        self.call_api(
+        self.api_caller.get(
             self.endpoints.get_url( Endpoints.WEBHOOK_FETCH ),
-            ApiCaller.METHOD_GET
         )
 
     def business_create( self ) -> None:
@@ -111,9 +96,8 @@ class Application:
 
         business: Business = BusinessFactory( self.config ).build()
 
-        self.call_api(
+        self.api_caller.post(
             self.endpoints.get_url( Endpoints.BUSINESS_CREATE ),
-            ApiCaller.METHOD_POST,
             business.__dict__
         )
 
@@ -133,9 +117,8 @@ class Application:
             amount = amount
         )
 
-        self.call_api(
+        self.api_caller.post(
             self.endpoints.get_url( Endpoints.TRANSACTION_CREATE ),
-            ApiCaller.METHOD_POST,
             transaction.__dict__
         )
 
@@ -150,7 +133,7 @@ class Application:
         url: str = self.endpoints.get_url( Endpoints.TRANSACTION_FETCH )
         url = url.replace("{transaction_uuid}", transaction_uuid )
 
-        self.call_api( url, ApiCaller.METHOD_GET )
+        self.api_caller.get( url )
 
     def transaction_list( self ) -> None:
         """
@@ -161,9 +144,8 @@ class Application:
 
         transaction_list: TransactionList = TransactionList( pageSize = 200 )
 
-        self.call_api(
+        self.api_caller.get(
             self.endpoints.get_url( Endpoints.TRANSACTION_LIST ),
-            ApiCaller.METHOD_GET,
             transaction_list.__dict__
         )
 
@@ -178,7 +160,7 @@ class Application:
         url: str = self.endpoints.get_url( Endpoints.TRANSACTION_CANCEL )
         url = url.replace( "{transaction_uuid}", transaction_uuid )
 
-        self.call_api( url, ApiCaller.METHOD_DELETE )
+        self.api_caller.delete( url )
 
     def transaction_create_mid( self, payer_uuid: str, payee_mid: str, amount: int ) -> None:
         """
@@ -196,9 +178,8 @@ class Application:
             amount = amount
         )
 
-        self.call_api(
+        self.api_caller.post(
             self.endpoints.get_url( Endpoints.TRANSACTION_CREATE ),
-            ApiCaller.METHOD_POST,
             transaction.__dict__
         )
 

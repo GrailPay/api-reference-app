@@ -3,10 +3,6 @@ import requests
 import json
 
 class ApiCaller:
-    METHOD_GET: str = "GET"
-    METHOD_POST: str = "POST"
-    METHOD_PUT: str = "PUT"
-    METHOD_DELETE: str = "DELETE"
 
     def __init__( self, config: Config ) -> None:
         self.config = config
@@ -26,30 +22,82 @@ class ApiCaller:
 
         return headers
 
-    def call( self, url: str, method: str, data: dict = None ) -> requests.Response | None:
-
-        headers: dict = self.get_headers()
-        response = None
-
-        print( f"Calling {url} with method {method}" )
+    @staticmethod
+    def pre_logging( method: str, url, data: dict = None ) -> None:
+        print(f"Calling {method} {url}")
         if data:
-            print( f"Data: {data}" )
+            print(f"Data: {data}")
 
-
-        if method == self.METHOD_GET:
-            response: requests.Response = requests.get( url, headers = headers, data = data )
-        elif method == self.METHOD_POST:
-            response: requests.Response = requests.post( url, headers = headers, json = data )
-        elif method == self.METHOD_PUT:
-            response: requests.Response = requests.put( url, headers = headers, json = data )
-        elif method == self.METHOD_DELETE:
-            response: requests.Response = requests.delete( url, headers = headers, json = data )
-
-        print( f"Status Code: {response.status_code}" )
+    @staticmethod
+    def post_logging(response):
+        print(f"Status Code: {response.status_code}")
         try:
-            formatted_response: str = json.dumps( response.json(), indent = 4 )
+            formatted_response: str = json.dumps(response.json(), indent=4)
         except ValueError:
             formatted_response: str = response.text
-        print( f"Response Body: {formatted_response}" )
+        print(f"Response Body: {formatted_response}")
+
+
+    def get(self, url: str, data: dict = None ) -> requests.Response | None:
+        """
+        Makes an api call using a get request.
+        :param url:
+        :param data:
+        :return:
+        """
+
+        self.pre_logging( "get", url, data)
+
+        response: requests.Response = requests.get( url, headers = self.get_headers(), data = data )
+
+        self.post_logging(response)
+
+        return response
+
+    def post(self, url: str, data: dict = None ) -> requests.Response | None:
+        """
+        Makes an api call using a post request.
+        :param url:
+        :param data:
+        :return:
+        """
+
+        self.pre_logging( "post", url, data)
+
+        response: requests.Response = requests.post(url, headers=self.get_headers(), json=data)
+
+        self.post_logging(response)
+
+        return response
+
+    def put(self, url: str, data: dict = None ) -> requests.Response | None:
+        """
+        Makes an api call using a put request.
+        :param url:
+        :param data:
+        :return:
+        """
+
+        self.pre_logging( "put", url, data)
+
+        response: requests.Response = requests.put(url, headers=self.get_headers(), json=data)
+
+        self.post_logging(response)
+
+        return response
+
+    def delete(self, url: str, data: dict = None ) -> requests.Response | None:
+        """
+        Makes an api call using a delete request.
+        :param url:
+        :param data:
+        :return:
+        """
+
+        self.pre_logging( "delete", url, data)
+
+        response: requests.Response = requests.delete(url, headers=self.get_headers(), json=data)
+
+        self.post_logging(response)
 
         return response
