@@ -1,19 +1,31 @@
 import sys
-from application import Application
+from idlelib.pyparse import trans
+
+from config import Config
+from webhook_api import WebhookApi
+from business_api import BusinessApi
+from transaction_api import TransactionApi
+
 
 def main() -> None:
-    app = Application()
+    CONFIG_FILE: str = "config.yaml"
+
+    config: Config = Config( CONFIG_FILE )
+
+    webhook_api = WebhookApi( config )
+    business_api = BusinessApi( config )
+    transaction_api = TransactionApi( config )
 
     actions: dict = {
-        "webhook:register": ( app.register_webhook, 0, "" ),
-        "webhook:deregister": ( app.deregister_webhook, 0, "" ),
-        "webhook:fetch": ( app.fetch_webhook, 0, "" ),
-        "business:create": ( app.business_create, 0, "" ),
-        "transaction:create": ( app.transaction_create, 3, "{payer_uuid} {payee_uuid} {amount_in_cents}" ),
-        "transaction:create_mid": ( app.transaction_create_mid, 3, "{payer_uuid} {payee_mid} {amount_in_cents}" ),
-        "transaction:cancel": ( app.transaction_cancel, 1, "{transaction_uuid}" ),
-        "transaction:fetch": ( app.transaction_fetch, 1, "{transaction_uuid}" ),
-        "transaction:list": ( app.transaction_list, 0, "" ),
+        "webhook:register": ( webhook_api.register, 0, "" ),
+        "webhook:deregister": ( webhook_api.deregister, 0, "" ),
+        "webhook:fetch": ( webhook_api.fetch, 0, "" ),
+        "business:create": ( business_api.create, 0, "" ),
+        "transaction:create": ( transaction_api.create, 3, "{payer_uuid} {payee_uuid} {amount_in_cents}" ),
+        "transaction:create_mid": ( transaction_api.create_mid, 3, "{payer_uuid} {payee_mid} {amount_in_cents}" ),
+        "transaction:cancel": ( transaction_api.cancel, 1, "{transaction_uuid}" ),
+        "transaction:fetch": ( transaction_api.fetch, 1, "{transaction_uuid}" ),
+        "transaction:list": ( transaction_api.list, 0, "" ),
     }
 
     if len( sys.argv ) < 2:
