@@ -1,5 +1,5 @@
 import requests
-from business_factory import BusinessFactory
+from business_builder import BusinessBuilder
 from dto import Webhook, Business, Transaction, TransactionMid, TransactionList
 from config import Config
 from endpoints import Endpoints
@@ -94,7 +94,11 @@ class Application:
         :return:
         """
 
-        business: Business = BusinessFactory( self.config ).build()
+        business: Business = (BusinessBuilder( self.config )
+                              .random_email()
+                              .random_tin()
+                              .random_account_routing()
+                              .build())
 
         self.api_caller.post(
             self.endpoints.get_url( Endpoints.BUSINESS_CREATE ),
