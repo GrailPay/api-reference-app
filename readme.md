@@ -32,20 +32,24 @@ This project was developed using Python 3.12.6
 
 The configuration is stored in config.yaml.
 
+## Logging
+
+* log_level: {level}
+
+Level can be:
+* debug
+* info
+* warning
+* error
+
+This controls the level of logging output when running the program. The default is info. If you want to
+see much more detail, set it to debug.
+
 ## Authentication
 
 * processor_api_key: refer to your GrailPay onboarding documentation.
 
 * vendor_api_key: refer to your GrailPay onboarding documentation.
-
-## Webhook
-
-* url: The URL to receive webhook notifications.
-
-
-This must be a functional URL that can receive POST requests in order for register to work correctly as it is called during the register process.
-
-For test purposes, sites like [webhook.site](https://webhook.site) can be used to receive webhook notifications.
 
 ## onboarding
 
