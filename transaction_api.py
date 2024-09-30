@@ -2,7 +2,6 @@ import logging
 from api_base import ApiBase
 from config import Config
 from endpoints import Endpoints
-from api_caller import ApiCaller
 from dto import Transaction, TransactionMid, TransactionList
 
 class TransactionApi( ApiBase ):
@@ -71,7 +70,11 @@ class TransactionApi( ApiBase ):
         url: str = self.endpoints.get_url( Endpoints.TRANSACTION_FETCH )
         url = url.replace("{transaction_uuid}", transaction_uuid )
 
-        self.api_caller.get( url )
+        response = self.api_caller.get( url )
+
+        if response.status_code == 200:
+            response_data = response.json()
+            self.show_transaction( response_data[ 'data' ] )
 
     def list( self ) -> None:
         """
@@ -82,10 +85,15 @@ class TransactionApi( ApiBase ):
 
         transaction_list: TransactionList = TransactionList( pageSize = 200 )
 
-        self.api_caller.get(
+        response = self.api_caller.get(
             self.endpoints.get_url( Endpoints.TRANSACTION_LIST ),
             transaction_list.__dict__
         )
+
+        if response.status_code == 200:
+            response_data = response.json()
+            for transaction in response_data[ 'data' ][ 'transactions' ]:
+                self.show_transaction( transaction )
 
     def cancel( self, transaction_uuid: str ) -> None:
         """
@@ -99,3 +107,9 @@ class TransactionApi( ApiBase ):
         url = url.replace( "{transaction_uuid}", transaction_uuid )
 
         self.api_caller.delete( url )
+
+    def show_transaction( self, transaction: dict ) -> None:
+        self.logger.info( f"UUID: {transaction['uuid']}")
+        self.logger.info( f"capture_status: {transaction['capture_status']}")
+        self.logger.info( f"payout_status: {transaction['payout_status']}")
+        self.logger.info( "-------------------------------" )

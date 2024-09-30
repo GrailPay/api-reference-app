@@ -34,7 +34,7 @@ class WebhookApi( ApiBase ):
             "RefundPayoutFailed",
         ]
 
-    def register( self ) -> None:
+    def register( self, webhook_url: str ) -> None:
         """
         This method registers a webhook with the GrailPay API
 
@@ -43,7 +43,7 @@ class WebhookApi( ApiBase ):
 
         webhook: Webhook = Webhook(
             webhook_url = [
-                self.config.WEBHOOK_URL
+                webhook_url
             ],
             event_names = self.webhook_events
         )
@@ -53,7 +53,7 @@ class WebhookApi( ApiBase ):
             webhook.__dict__
         )
 
-    def deregister( self ) -> None:
+    def deregister( self, webhook_url: str ) -> None:
         """
         This method deregisters a webhook with the GrailPay API
 
@@ -62,7 +62,7 @@ class WebhookApi( ApiBase ):
 
         webhook: Webhook = Webhook(
             webhook_url = [
-                self.config.WEBHOOK_URL
+                webhook_url
             ],
             event_names = self.webhook_events
         )
@@ -79,6 +79,11 @@ class WebhookApi( ApiBase ):
         :return:
         """
 
-        self.api_caller.get(
+        response = self.api_caller.get(
             self.endpoints.get_url( Endpoints.WEBHOOK_FETCH ),
         )
+
+        if response.status_code == 200:
+            response_data = response.json()
+            for webhook in response_data[ 'data' ]:
+                self.logger.info( f"Event: {webhook['event_name']} Url: {webhook['webhook_url']}" )

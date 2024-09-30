@@ -27,8 +27,8 @@ def main() -> None:
     transaction_api = TransactionApi( config, logger )
 
     actions: dict = {
-        "webhook:register": ( webhook_api.register, 0, "" ),
-        "webhook:deregister": ( webhook_api.deregister, 0, "" ),
+        "webhook:register": ( webhook_api.register, 1, "{webhook_url}" ),
+        "webhook:deregister": ( webhook_api.deregister, 1, "{webhook_url}" ),
         "webhook:fetch": ( webhook_api.fetch, 0, "" ),
         "business:create": ( business_api.create, 0, "" ),
         "transaction:create": ( transaction_api.create, 3, "{payer_uuid} {payee_uuid} {amount_in_cents}" ),

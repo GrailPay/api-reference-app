@@ -30,7 +30,6 @@ class Config:
             self.ENVIRONMENT = config[ "environment" ]
             self.PROCESSOR_API_KEY = config[ "authentication" ][ "processor_api_key" ]
             self.VENDOR_API_KEY = config[ "authentication" ][ "vendor_api_key" ]
-            self.WEBHOOK_URL = config[ "webhook" ][ "url" ]
             self.KYB = config[ "onboarding" ][ "kyb" ]
             self.ROUTING_NUMBER = config[ "routing_number" ]
             self.LOG_LEVEL = config[ "log_level" ]
