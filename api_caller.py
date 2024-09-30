@@ -4,6 +4,19 @@ import requests
 import json
 import logging
 
+def call_logging(func):
+    """
+    Decorator for adding loging to pre/post api calls.
+    :param func:
+    :return:
+    """
+    def wrapper( self, *args, **kwargs):
+        self.pre_logging( *args, **kwargs)
+        response = func( self, *args, **kwargs)
+        self.post_logging(response)
+        return response
+    return wrapper
+
 class ApiCaller:
 
     def __init__( self, config: Config, logger: logging.Logger ) -> None:
@@ -25,8 +38,8 @@ class ApiCaller:
 
         return headers
 
-    def pre_logging( self, method: str, url, data: dict = None ) -> None:
-        self.logger.info( f"Calling {method} {url}" )
+    def pre_logging( self, url, data: dict = None ) -> None:
+        self.logger.info( f"Calling {url}" )
         if data:
             self.logger.debug( f"Data: {data}" )
 
@@ -40,6 +53,7 @@ class ApiCaller:
 
         self.logger.debug( f"Response Body: {formatted_response}" )
 
+    @call_logging
     def get( self, url: str, data: dict = None ) -> requests.Response | None:
         """
         Makes an api call using a get request.
@@ -48,14 +62,11 @@ class ApiCaller:
         :return:
         """
 
-        self.pre_logging( "get", url, data)
-
         response: requests.Response = requests.get( url, headers = self.get_headers(), data = data )
-
-        self.post_logging(response)
 
         return response
 
+    @call_logging
     def post( self, url: str, data: dict = None ) -> requests.Response | None:
         """
         Makes an api call using a post request.
@@ -64,14 +75,11 @@ class ApiCaller:
         :return:
         """
 
-        self.pre_logging( "post", url, data)
-
         response: requests.Response = requests.post( url, headers = self.get_headers(), json = data )
-
-        self.post_logging(response)
 
         return response
 
+    @call_logging
     def put( self, url: str, data: dict = None ) -> requests.Response | None:
         """
         Makes an api call using a put request.
@@ -80,14 +88,11 @@ class ApiCaller:
         :return:
         """
 
-        self.pre_logging( "put", url, data )
-
         response: requests.Response = requests.put( url, headers = self.get_headers(), json = data )
-
-        self.post_logging(response)
 
         return response
 
+    @call_logging
     def delete( self, url: str, data: dict = None ) -> requests.Response | None:
         """
         Makes an api call using a delete request.
@@ -96,10 +101,6 @@ class ApiCaller:
         :return:
         """
 
-        self.pre_logging( "delete", url, data)
-
         response: requests.Response = requests.delete( url, headers = self.get_headers(), json = data )
-
-        self.post_logging(response)
 
         return response
