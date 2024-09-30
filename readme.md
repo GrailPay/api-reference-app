@@ -68,7 +68,7 @@ The account number is randomly generated.
 
 (https://docs.grailpay.com/docs/register-a-webhook)
 
-    python grailpay.py webhook:register
+    python grailpay.py webhook:register {webhook_url}
 
 Register the webhook url specified in the config file to receive webhook event notifications.
 Currently subscribes to all events.
@@ -77,7 +77,7 @@ Currently subscribes to all events.
 
 (https://docs.grailpay.com/docs/deregister-webhook)
 
-    python grailpay.py webhook:deregister
+    python grailpay.py webhook:deregister {webhook_url}
 
 Deregister the webhook url specified in the config file to stop receiving webhook event notifications.
 
