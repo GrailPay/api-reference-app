@@ -51,7 +51,7 @@ see much more detail, set it to debug.
 
 * vendor_api_key: refer to your GrailPay onboarding documentation.
 
-## onboarding
+## Onboarding
 
 * kyb: bool
 
@@ -104,7 +104,9 @@ Fetch a list of all webhooks and subscribed events.
 Create a business with a random account number and the routing number specified in the config file.
 TIN and email are randomly generated.
 
-The uuid of this entity is used in the transaction:create command. You will need to create two businesses to perform a transaction.
+The output is the uuid of the business created.
+
+The uuid of this entity is used in the transaction:create command. You will need to create two businesses to perform a transaction, on to be used as the payer and one as the payee.
 
 ### transaction:create
 
@@ -118,6 +120,8 @@ The uuid of this entity is used in the transaction:create command. You will need
 
 Using the uuids of the businesses created in the business:create command, create a transaction between the two businesses.
 
+The output is the uuid of the transaction created.
+
 ### transaction:create_mid
 
 (https://docs.grailpay.com/docs/creating-a-transaction)
@@ -129,6 +133,8 @@ Using the uuids of the businesses created in the business:create command, create
 * amount: The amount of the transaction in cents.
 
 Using the uuid of the source business and the mid of the destination business, create a transaction between the two businesses.
+
+The output is the uuid of the transaction created.
 
 ### transaction:cancel
 
@@ -158,7 +164,30 @@ Fetch the details of a transaction using the uuid of the transaction.
 
 Fetch the details of the last 200 transactions.
 
-# Usage
+### transaction:refund
+
+(https://docs.grailpay.com/docs/refund-transaction)
+
+    python grailpay.py transaction:refund {transaction_uuid} {amount}
+
+* transaction_uuid: The uuid of the transaction to refund.
+* amount: The amount of the refund in cents.
+
+Refund a transaction using the uuid of the transaction and the amount to refund.
+
+The output is the uuid of the refund created.
+
+### transaction:fetch_refunds
+
+(https://docs.grailpay.com/docs/refunds)
+
+    python grailpay.py transaction:fetch_refunds {transaction_uuid}
+
+* transaction_uuid: The uuid of the transaction to fetch refunds for.
+
+Fetch the refunds for a transaction using the uuid of the transaction.
+
+# Basic Usage
 
 1. Register a webhook.
 
@@ -199,3 +228,9 @@ Fetch the details of the last 200 transactions.
     * Check the log of your webhook url to see the transaction event notifications.
 
     * You can read about the events here: [GrailPay Webhooks](https://docs.grailpay.com/docs/webhooks)
+
+# Running Tests
+
+Tests are handled by pytest. To run the tests, use the following command:
+
+    pytest

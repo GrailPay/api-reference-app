@@ -34,6 +34,8 @@ def main() -> None:
         "transaction:create": ( transaction_api.create, 3, "{payer_uuid} {payee_uuid} {amount_in_cents}" ),
         "transaction:create_mid": ( transaction_api.create_mid, 3, "{payer_uuid} {payee_mid} {amount_in_cents}" ),
         "transaction:cancel": ( transaction_api.cancel, 1, "{transaction_uuid}" ),
+        "transaction:refund": ( transaction_api.refund, 2, "{transaction_uuid} {amount_in_cents}" ),
+        "transaction:fetch_refunds": ( transaction_api.fetch_refunds, 1, "{transaction_uuid}" ),
         "transaction:fetch": ( transaction_api.fetch, 1, "{transaction_uuid}" ),
         "transaction:list": ( transaction_api.list, 0, "" ),
     }

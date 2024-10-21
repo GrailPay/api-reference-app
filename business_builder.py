@@ -89,7 +89,7 @@ class BusinessBuilder:
                     "line_1": "10554 W Quarles Ave",
                     "city": "Littleton",
                     "state": "CO",
-                    "zip": "80127"
+                    "zip": "8012"
                 }
             },
             business_owners = [

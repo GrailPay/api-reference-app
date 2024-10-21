@@ -6,6 +6,8 @@
 * Webhook:fetch now shows the parsed results.
 * Transaction:list now shows the pared results.
 * Removed webhook_url from the config file and made it a parameter for register and deregister.
+* Added transaction:refund.
+* Added pytest.
 
 ## 0.5.3 2024-09-19
 * Added transaction:list

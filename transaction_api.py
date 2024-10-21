@@ -1,8 +1,11 @@
 import logging
+from typing import Any
+import pprint
+
 from api_base import ApiBase
 from config import Config
 from endpoints import Endpoints
-from dto import Transaction, TransactionMid, TransactionList
+from dto import Transaction, TransactionMid, TransactionList, TransactionRefund
 
 class TransactionApi( ApiBase ):
 
@@ -112,4 +115,45 @@ class TransactionApi( ApiBase ):
         self.logger.info( f"UUID: {transaction['uuid']}")
         self.logger.info( f"capture_status: {transaction['capture_status']}")
         self.logger.info( f"payout_status: {transaction['payout_status']}")
+        self.logger.info( f"amount: {transaction['amount']}")
         self.logger.info( "-------------------------------" )
+
+    def refund( self, transaction_uuid: str, amount_in_cents: int ) -> dict[str, Any] | bool:
+        """
+        This method refunds a transaction with the GrailPay API using a transaction uuid
+
+        :param transaction_uuid:
+        :param amount_in_cents:
+        :return:
+        """
+
+        url: str = self.endpoints.get_url( Endpoints.TRANSACTION_REFUND )
+        url = url.replace( "{transaction_uuid}", transaction_uuid )
+
+        transaction_refund: TransactionRefund = TransactionRefund( client_reference_id = "", amount = amount_in_cents )
+
+        response = self.api_caller.post( url, transaction_refund.__dict__ )
+
+        if response.status_code == 201:
+            response_data = response.json()
+            self.logger.info( f"Created refund: {response_data['data']['uuid']}")
+            return response_data
+
+        return False
+
+    def fetch_refunds( self, transaction_uuid: str ) -> None:
+        """
+        This method fetches all refunds associated with a transaction.
+
+        :param transaction_uuid: The uuid of the transaction to fetch.
+        :return:
+        """
+
+        url: str = self.endpoints.get_url( Endpoints.TRANSACTION_FETCH_REFUNDS )
+        url = url.replace("{transaction_uuid}", transaction_uuid )
+
+        response = self.api_caller.get( url )
+
+        if response.status_code == 200:
+            response_data = response.json()
+            pprint.pprint( response_data[ 'data' ] )
