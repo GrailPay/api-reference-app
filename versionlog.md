@@ -8,6 +8,8 @@
 * Removed webhook_url from the config file and made it a parameter for register and deregister.
 * Added transaction:refund.
 * Added pytest.
+* Removed the deprecated PayoutOnHold event from register webhook.
+* Updated the directory structure.
 
 ## 0.5.3 2024-09-19
 * Added transaction:list
