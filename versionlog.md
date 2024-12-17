@@ -1,4 +1,5 @@
-## 0.5.5
+## 0.5.5 2024-12-17
+* More restructuring.
 
 ## 0.5.4 2024-12-17
 * Major refactoring.
