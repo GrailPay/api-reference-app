@@ -1,9 +1,9 @@
 import sys
 import logging
-from config import Config
+from core.config import Config
 from api.webhook_api import WebhookApi
 from api.business_api import BusinessApi
-from transaction_api import TransactionApi
+from api.transaction_api import TransactionApi
 
 def get_log_level( level: str) -> int:
     level_map: dict = {
@@ -14,6 +14,14 @@ def get_log_level( level: str) -> int:
     }
 
     return level_map[ level.upper() ]
+
+def show_commands(actions):
+    for action, (func, param_count, param_desc) in actions.items():
+        if param_count == 0:
+            print(f"  {action}")
+            continue
+
+        print(f"  {action} {param_desc} ")
 
 def main() -> None:
     CONFIG_FILE: str = "config.yaml"
@@ -43,26 +51,24 @@ def main() -> None:
     if len( sys.argv ) < 2:
         print( "Usage: python grailpay.py <action> [params]" )
         print( "Actions:" )
-        for action, ( func, param_count, param_desc ) in actions.items():
-            if param_count == 0:
-                print( f"  {action}" )
-            else:
-                print( f"  {action} {param_desc} ")
+        show_commands( actions )
 
         sys.exit( 1 )
 
     action = sys.argv[ 1 ]
 
-    if action in actions:
-        func, param_count, param_desc = actions[ action ]
-        if len( sys.argv ) - 2 != param_count:
-            print( f"Usage: python grailpay.py {action} {param_desc}" )
-            sys.exit( 1 )
-        params = sys.argv[ 2: ]
-        func( *params )
-    else:
+    if not action in actions:
         print( f"Unknown action: {action}" )
         sys.exit( 1 )
+
+    func, param_count, param_desc = actions[ action ]
+
+    if len( sys.argv ) - 2 != param_count:
+        print( f"Usage: python grailpay.py {action} {param_desc}" )
+        sys.exit( 1 )
+
+    params = sys.argv[ 2: ]
+    func( *params )
 
 if __name__ == '__main__':
     main()

@@ -1,8 +1,8 @@
 import random
 import string
-from config import Config
+from core.config import Config
 from dto import AccountRouting, Business
-from account_routing_factory import AccountRoutingFactory
+from core.account_routing_factory import AccountRoutingFactory
 
 class BusinessBuilder:
 

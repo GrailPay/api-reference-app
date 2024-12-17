@@ -1,5 +1,4 @@
-import logging
-from config import Config
+from core.config import Config
 import requests
 import json
 import logging
@@ -15,6 +14,7 @@ def call_logging(func):
         response = func( self, *args, **kwargs)
         self.post_logging(response)
         return response
+
     return wrapper
 
 class ApiCaller:

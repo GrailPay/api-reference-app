@@ -23,10 +23,10 @@ This program is a reference implementation of the GrailPay API. It demonstrates 
 This project was developed using Python 3.12.6
 
 ## Install Python Packages
-    pip install -r requirements.txt
+    pip install -r resources/requirements.txt
 
 ## Setup Config File
-    cp config.yaml.example config.yaml
+    cp resources/config.yaml.example config.yaml
 
 # Configuration
 

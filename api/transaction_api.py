@@ -3,7 +3,7 @@ from typing import Any
 import pprint
 
 from api.api_base import ApiBase
-from config import Config
+from core.config import Config
 from api.endpoints import Endpoints
 from dto import Transaction, TransactionMid, TransactionList, TransactionRefund
 

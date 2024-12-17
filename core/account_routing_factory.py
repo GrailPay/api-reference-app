@@ -1,6 +1,6 @@
 import random
 from dto import AccountRouting
-from config import Config
+from core.config import Config
 
 class AccountRoutingFactory:
 
