@@ -15,6 +15,7 @@ def call_logging(func):
         response = func( self, *args, **kwargs)
         self.post_logging(response)
         return response
+
     return wrapper
 
 class ApiCaller:
