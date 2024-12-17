@@ -1,8 +1,8 @@
 import logging
 
-from api_base import ApiBase
+from api.api_base import ApiBase
 from config import Config
-from endpoints import Endpoints
+from api.endpoints import Endpoints
 from dto import Business
 from business_builder import BusinessBuilder
 
@@ -11,7 +11,7 @@ class BusinessApi( ApiBase ):
     def __init__( self, config: Config, logger: logging.Logger ):
         super().__init__( config, logger )
 
-    def create( self ) -> None:
+    def create( self ) -> str:
         """
         This method creates and registers a business with the GrailPay API
 
@@ -31,4 +31,7 @@ class BusinessApi( ApiBase ):
 
         if response.status_code == 201:
             response_data = response.json()
-            self.logger.info( f"Created business: {response_data['data']['uuid']}")
+            self.logger.info( f"Created business: {response_data['data']['uuid']}" )
+            return response_data['data']['uuid']
+
+        return ""

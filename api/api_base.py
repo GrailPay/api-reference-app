@@ -1,7 +1,7 @@
 import logging
 from config import Config
-from endpoints import Endpoints
-from api_caller import ApiCaller
+from api.endpoints import Endpoints
+from api.api_caller import ApiCaller
 
 class ApiBase:
 

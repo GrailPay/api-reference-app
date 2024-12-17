@@ -1,9 +1,9 @@
 import logging
 from typing import Any
 
-from api_base import ApiBase
+from api.api_base import ApiBase
 from config import Config
-from endpoints import Endpoints
+from api.endpoints import Endpoints
 from dto import Webhook
 
 class WebhookApi( ApiBase ):
@@ -17,7 +17,6 @@ class WebhookApi( ApiBase ):
             "TransactionCompleted",
             "TransactionFailed",
             "TransactionCanceled",
-            "PayoutOnHold",
             "PayoutCompleted",
             "ClawbackStarted",
             "ClawbackFailed",

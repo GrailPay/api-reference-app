@@ -2,9 +2,9 @@ import logging
 from typing import Any
 import pprint
 
-from api_base import ApiBase
+from api.api_base import ApiBase
 from config import Config
-from endpoints import Endpoints
+from api.endpoints import Endpoints
 from dto import Transaction, TransactionMid, TransactionList, TransactionRefund
 
 class TransactionApi( ApiBase ):
@@ -12,7 +12,7 @@ class TransactionApi( ApiBase ):
     def __init__( self, config: Config, logger: logging.Logger ):
         super().__init__( config, logger )
 
-    def create( self, payer_uuid: str, payee_uuid: str, amount: int ) -> None:
+    def create( self, payer_uuid: str, payee_uuid: str, amount: int ) -> str:
         """
         This method creates a transaction with the GrailPay API using a uuid for the payer and payee
 
@@ -36,10 +36,13 @@ class TransactionApi( ApiBase ):
         if response.status_code == 201:
             response_data = response.json()
             self.logger.info( f"Created transaction: {response_data['data']['uuid']}")
+            return response_data['data']['uuid']
+
+        return ""
 
     def create_mid( self, payer_uuid: str, payee_mid: str, amount: int ) -> None:
         """
-        This method creates a transaction with the GrailPay API using a uuid for the payor and a mid for the payee
+        This method creates a transaction with the GrailPay API using a uuid for the payer and a mid for the payee
 
         :param payer_uuid: The uuid of the payer entity.
         :param payee_mid: The mid of the payee entity.

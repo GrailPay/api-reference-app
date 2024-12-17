@@ -1,9 +1,8 @@
 import pytest
 import logging
-import json
 from config import Config
-from webhook_api import WebhookApi
-from business_api import BusinessApi
+from api.webhook_api import WebhookApi
+from api.business_api import BusinessApi
 from transaction_api import TransactionApi
 
 def get_log_level( level: str) -> int:
@@ -57,4 +56,27 @@ def test_webhook_fetch( setup_and_teardown ):
     assert response is not None
     assert len( response ) > 0
 
+def test_business_create( setup_and_teardown ):
+    config, logger = setup_and_teardown
 
+    business_api = BusinessApi( config, logger )
+    business_uuid: str = business_api.create()
+
+    assert business_uuid is not None
+
+def test_transaction_create( setup_and_teardown ):
+    config, logger = setup_and_teardown
+
+    business_api = BusinessApi( config, logger )
+    payer_uuid: str = business_api.create()
+
+    assert payer_uuid is not None
+
+    payee_uuid: str = business_api.create()
+
+    assert payee_uuid is not None
+
+    transaction_api = TransactionApi( config, logger )
+    transaction_uuid = transaction_api.create( payer_uuid, payee_uuid, 1000 )
+
+    assert transaction_uuid is not None
