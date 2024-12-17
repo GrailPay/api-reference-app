@@ -1,5 +1,5 @@
 import logging
-from config import Config
+from core.config import Config
 from api.endpoints import Endpoints
 from api.api_caller import ApiCaller
 

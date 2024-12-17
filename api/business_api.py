@@ -1,10 +1,10 @@
 import logging
 
 from api.api_base import ApiBase
-from config import Config
+from core.config import Config
 from api.endpoints import Endpoints
 from dto import Business
-from business_builder import BusinessBuilder
+from core.business_builder import BusinessBuilder
 
 class BusinessApi( ApiBase ):
 

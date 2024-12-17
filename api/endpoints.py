@@ -1,4 +1,4 @@
-from config import Config
+from core.config import Config
 
 class Endpoints:
     WEBHOOK_REGISTER: str = "/api/v1/webhook"

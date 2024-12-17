@@ -1,5 +1,4 @@
-import logging
-from config import Config
+from core.config import Config
 import requests
 import json
 import logging
