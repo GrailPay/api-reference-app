@@ -1,11 +1,10 @@
-environment: "sandbox"
+environment: sandbox
+
+log_level: info
 
 authentication:
     processor_api_key: "your_processor_api_key"
     vendor_api_key: "your_vendor_api_key"
-
-webhook:
-    url: "your_webhook_url"
 
 onboarding:
     kyb: True
