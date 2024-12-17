@@ -1,4 +1,4 @@
-## 0.5.4
+## 0.5.4 2024-12-17
 * Major refactoring.
 * Added logging.
 * Transaction:create now shows the UUID.
